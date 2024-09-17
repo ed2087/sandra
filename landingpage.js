@@ -160,17 +160,17 @@ const balloonImages = [];
 function loadBalloons() {
     for (let i = 1; i <= 34; i++) {
         const img = new Image();
-        img.src = `../../public/images/Balloons/form1/balloon_form_1_${i}.png`;
+        img.src = `public/images/Balloons/form1/balloon_form_1_${i}.png`;
         balloonImages.push(img);
     }
     for (let i = 1; i <= 9; i++) {
         const img = new Image();
-        img.src = `../../public/images/Balloons/form2/balloon_form_2_${i}.png`;
+        img.src = `public/images/Balloons/form2/balloon_form_2_${i}.png`;
         balloonImages.push(img);
     }
     for (let i = 1; i <= 18; i++) {
         const img = new Image();
-        img.src = `../../public/images/Balloons/form3/balloon_form_3_${i}.png`;
+        img.src = `public/images/Balloons/form3/balloon_form_3_${i}.png`;
         balloonImages.push(img);
     }
 }
