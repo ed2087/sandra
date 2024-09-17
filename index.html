@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Particle Effect</title>
+   
+    <style>
+         *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: linear-gradient(to bottom, #1a1a1a, #1e1e1e, #222222, #262626, #2a2a2a, #2a2a2a, #2a2a2a, #2a2a2a, #252525, #202020, #1c1c1c, #171717);
+            overflow: hidden;
+        }
+        canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        /* Button style for asking user to allow audio */
+        #buttonWrap {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: black;
+            z-index: 100000;
+        }
+        #audioPermission {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #f04a5b;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Pacifico', cursive;
+            z-index: 1;
+        }
+        #audioPermission:focus {
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="cakeCanvas"></canvas>
+
+    <!-- Permission button to ask the user to allow audio -->
+     <div id="buttonWrap">
+        <!-- gif emojy -->
+        <button id="audioPermission">🎉 Click to start the party 🎉</button>
+    </div>
+
+    <!-- Audio element that will play the music -->
+    <audio id="backgroundMusic" loop>
+        <source src="public/music/mananitas.mp3" type="audio/mpeg">
+        <source src="public/music/mananitas.ogg" type="audio/ogg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script src="globos.js"></script>
+    <script src="landingpage.js"></script>
+    
+</body>
+</html>
