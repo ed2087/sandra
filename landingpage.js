@@ -1,3 +1,4 @@
+console.log("updated")
 const canvas = document.getElementById("cakeCanvas");
 const ctx = canvas.getContext("2d");
 
