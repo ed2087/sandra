@@ -11,7 +11,7 @@ let fps = 60;
 let lastFrameTime = performance.now();
 let mouseX = 0;
 let mouseY = 0;
-let particleSize = 3.5;
+let particleSize = 4.5;
 
 const MAX_WIDTH = 662;  // Max width of the image
 const MAX_HEIGHT = 408; // Max height of the image

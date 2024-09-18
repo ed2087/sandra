@@ -29,19 +29,36 @@ const images = [
         `
     },
     {
-        src: 'public/images/personal/2.jpg',
-        titleText: "",
-        text: ``
+        src: 'public/images/personal/jennifer.jpg',
+        titleText: "Para La Mujer Mas Poderosa Del Mundo",
+        text: `
+        Mom, you are the hardest-working person I know, always pushing yourself for us, and never giving up no matter how tough things get. You’ve always been my biggest supporter, and I know that your love for me is endless. You’ve been there for me always, despite sometimes that I’m a little “crazy” or give you an attitude. You always try your best to make me and my siblings so happy, you’ve gave me the confidence I have today to express my style and the way I am. I can’t thank you for everything you’ve ever given me mama, you’re my everything.
+        <br><br>
+        Love you so much,
+        <br><br>
+        Jennifer
+        `
     },
     {
-        src: 'public/images/personal/2.jpg',
-        titleText: "",
-        text: ``
+        src: 'public/images/personal/jazlynn.jpg',
+        titleText: "To the Frog-Hating, Brother-Wrangling, Wonder Woman of a Mom",
+        text: `
+        Mom, you are such a good person, and I think you're so beautiful, inside and out. You work really hard every single day, and even though you don’t like frogs (which is kinda funny), I still love you so much. You’re always there for me, like when you stop my little brother from beating me up, and honestly, you're just an incredible person.
+        <br><br>
+        I’m so lucky to have a mom like you. You’re wonderful in every way, and I love you with all my heart.
+        <br><br>
+        Love,
+        Jazlynn
+        `
     },
     {
-        src: 'public/images/personal/2.jpg',
-        titleText: "",
-        text: ``
+        src: 'public/images/personal/cumpleanos.jpg',
+        titleText: "De parte de todos nosotros",
+        text: `
+        Te deseamos que tengas un día increíble, aunque te toque ir a trabajar (LOL). Sabemos lo dura que eres, y aún así, esperamos que disfrutes tu día al máximo, porque te lo mereces como nadie.
+            <br><br>
+        ¡Te queremos mucho!
+        `
     },
 
 ];
@@ -213,5 +230,36 @@ function loadNextImage() {
     loadImageAsPixels();
 }
 
-// Start by loading the first image
-loadImageAsPixels();
+
+
+
+
+
+
+
+// Get elements for audio and the permission button
+const audio = document.getElementById('backgroundMusic');
+const audioPermissionButton = document.getElementById('audioPermission');
+const buttonWrap = document.getElementById('buttonWrap');
+
+// Function to handle the user granting permission
+function enableAudio() {
+    // Play the audio
+    audio.play()
+        .then(() => {
+            // If playback starts, hide the permission button
+            audioPermissionButton.style.display = 'none';
+            buttonWrap.style.display = 'none';
+
+            // Start by loading the first image
+            loadImageAsPixels();
+
+        })
+        .catch(error => {
+            console.error('Failed to start audio playback:', error);
+        });
+
+}
+
+// Add event listener to the button for starting the audio
+audioPermissionButton.addEventListener('click', enableAudio);
