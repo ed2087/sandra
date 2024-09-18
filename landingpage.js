@@ -175,7 +175,7 @@ const balloonImages = [];
 function loadBalloons() {
     for (let i = 1; i <= 34; i++) {
         const img = new Image();
-        img.src = `../../public/images/Balloons/Form1/balloon_form_1_${i}.png`;
+        img.src = `../../../public/images/Balloons/Form1/balloon_form_1_${i}.png`;
         balloonImages.push(img);
     }
     for (let i = 1; i <= 9; i++) {
@@ -185,9 +185,10 @@ function loadBalloons() {
     }
     for (let i = 1; i <= 18; i++) {
         const img = new Image();
-        img.src = `./public/images/Balloons/Form3/balloon_form_3_${i}.png`;
+        img.src = `public/images/Balloons/Form3/balloon_form_3_${i}.png`;
         balloonImages.push(img);
     }
+    console.log(balloonImages)
 }
 
 // Handle mouse movement over the canvas
