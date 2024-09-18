@@ -1,4 +1,4 @@
-console.log("updated")
+console.log("updated-12:36")
 const canvas = document.getElementById("cakeCanvas");
 const ctx = canvas.getContext("2d");
 
@@ -210,12 +210,12 @@ const vortextFUnction = () => {
             p.speedY = Math.sin(angle) * speed;
         });
 
-        balloons.forEach(b => {
-            const angle = Math.atan2(canvas.height / 2 - b.y, canvas.width / 2 - b.x);
-            const speed = Math.random() * 5 + 2;
-            b.speedX = Math.cos(angle) * speed;
-            b.speedY = Math.sin(angle) * speed;
-        });
+        //balloons.forEach(b => {
+            //const angle = Math.atan2(canvas.height / 2 - b.y, canvas.width / 2 - b.x);
+            //const speed = Math.random() * 5 + 2;
+            //b.speedX = Math.cos(angle) * speed;
+            //b.speedY = Math.sin(angle) * speed;
+        //});
 
         // Trigger page transition 3 seconds after explosion
         setTimeout(() => {
