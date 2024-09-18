@@ -11,10 +11,13 @@ let fps = 60;
 let lastFrameTime = performance.now();
 let mouseX = 0;
 let mouseY = 0;
-let particleSize = 4.5;
+let particleSize = 3.5;
 
 const MAX_WIDTH = 662;  // Max width of the image
 const MAX_HEIGHT = 408; // Max height of the image
+
+let showingImage = true; // Track whether the image is displayed
+let allParticlesStopped = false; // Track if particles have stopped moving
 
 // Set canvas size to window size and make it responsive
 function resizeCanvas() {
@@ -36,9 +39,34 @@ birthdayImage.onload = () => {
     createImageParticles(birthdayImage);
 };
 
+// Function to draw the image only if the flag `showingImage` is true
+function drawImageWithParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+
+    if (showingImage) {
+        const scaleFactor = Math.min(canvas.width / MAX_WIDTH, canvas.height / MAX_HEIGHT, 1);
+        const imageWidth = MAX_WIDTH * scaleFactor;
+        const imageHeight = MAX_HEIGHT * scaleFactor;
+        const imageX = (canvas.width - imageWidth) / 2;
+        const imageY = (canvas.height - imageHeight) / 2;
+        ctx.drawImage(birthdayImage, imageX, imageY, imageWidth, imageHeight); // Draw the image if showingImage is true
+    }
+
+    // Then render particles over the image
+    particles.forEach(p => {
+        p.x += p.speedX;
+        p.y += p.speedY;
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+    });
+}
+
 // Create particles from the center-positioned and scaled image
 function createImageParticles(image) {
     particles = [];
+    allParticlesStopped = false; // Reset the stopped flag when recreating particles
 
     const scaleFactor = Math.min(canvas.width / MAX_WIDTH, canvas.height / MAX_HEIGHT, 1);
     const imageWidth = MAX_WIDTH * scaleFactor;
@@ -48,7 +76,6 @@ function createImageParticles(image) {
 
     ctx.drawImage(image, imageX, imageY, imageWidth, imageHeight);
     const imageData = ctx.getImageData(imageX, imageY, imageWidth, imageHeight);
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     for (let i = 0; i < imageData.width; i += 10) {
         for (let j = 0; j < imageData.height; j += 10) {
@@ -64,7 +91,8 @@ function createImageParticles(image) {
                     speedX: 0,
                     speedY: 0,
                     originalX: imageX + i,
-                    originalY: imageY + j
+                    originalY: imageY + j,
+                    isStopped: false // Track if the particle has stopped
                 };
                 particles.push(particle);
             }
@@ -74,7 +102,7 @@ function createImageParticles(image) {
 
 // Animate particles, balloons, and handle mouse interaction
 function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawImageWithParticles(); // Draw the image and particles together
 
     adjustParticleCount(); // Check FPS and adjust particles dynamically
 
@@ -95,7 +123,6 @@ function animate() {
         b.draw(ctx);
     });
 
-    // Animate particles
     particles.forEach(p => {
         if (vortexActive) {
             const angle = Math.atan2(canvas.height / 2 - p.y, canvas.width / 2 - p.x);
@@ -105,21 +132,9 @@ function animate() {
             p.x += (p.originalX - p.x) * 0.05;
             p.y += (p.originalY - p.y) * 0.05;
         }
-
-        p.x += p.speedX;
-        p.y += p.speedY;
-        ctx.fillStyle = p.color;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fill();
     });
 
-    // Display FPS
-    ctx.font = "16px Pacifico, cursive";
-    ctx.fillStyle = "white";
-    ctx.fillText(`FPS: ${Math.round(fps)}`, 60, 20);
-
-    requestAnimationFrame(animate);
+    requestAnimationFrame(animate); // Continue animation
 }
 
 // Adjust particle count based on FPS
@@ -181,8 +196,7 @@ canvas.addEventListener('mousemove', (e) => {
     mouseY = e.clientY;
 });
 
-// Trigger vortex effect on click
-
+// Trigger vortex effect on click and hide the image
 const vortextFUnction = () => {
     vortexActive = !vortexActive;
 
@@ -208,13 +222,14 @@ const vortextFUnction = () => {
     }
 };
 
+// On click, remove the image and activate the vortex
 canvas.addEventListener("click", () => {
-    vortextFUnction();
+    showingImage = false; // Hide the image when clicked
+    vortextFUnction();    // Trigger vortex effect if particles are shown again
 });
 
 // Start animation
 document.fonts.ready.then(() => {
-
 
     // Get elements for audio and the permission button
     const audio = document.getElementById('backgroundMusic');
@@ -240,15 +255,13 @@ document.fonts.ready.then(() => {
                 console.error('Failed to start audio playback:', error);
             });
 
-            // listen for the audio to end
-            audio.addEventListener('ended', () => {
-                vortextFUnction();
-            });
-
+        // Listen for the audio to end
+        audio.addEventListener('ended', () => {
+            vortextFUnction();
+        });
     }
 
     // Add event listener to the button for starting the audio
     audioPermissionButton.addEventListener('click', enableAudio);
 
-    
 });
